@@ -6,15 +6,21 @@
 // Só instala em banco VAZIO; num banco que já tem o schema, não faz nada.
 import fs from "node:fs";
 import path from "node:path";
+import { fileURLToPath } from "node:url";
 import pg from "pg";
 
-const raiz = path.resolve(path.dirname(new URL(import.meta.url).pathname.replace(/^\/([A-Za-z]:)/, "$1")), "..");
+const raiz = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 const env = {};
-for (const linha of fs.readFileSync(path.join(raiz, ".env.local"), "utf8").split("\n")) {
-  const m = linha.match(/^([A-Z0-9_]+)=(.*)$/);
-  if (m) env[m[1]] = m[2];
+const arquivoEnv = path.join(raiz, ".env.local");
+if (fs.existsSync(arquivoEnv)) {
+  for (const linha of fs.readFileSync(arquivoEnv, "utf8").split(/\r?\n/)) {
+    const m = linha.match(/^([A-Z0-9_]+)=(.*)$/);
+    if (m) env[m[1]] = m[2];
+  }
 }
-const url = env.SUPABASE_DB_ADMIN_URL || env.SUPABASE_DB_URL;
+const url =
+  process.env.SUPABASE_DB_ADMIN_URL || process.env.SUPABASE_DB_URL ||
+  env.SUPABASE_DB_ADMIN_URL || env.SUPABASE_DB_URL;
 if (!url) {
   console.error("✖ SUPABASE_DB_URL ausente no .env.local — rode darkcom/configurar-local.ps1");
   process.exit(1);
