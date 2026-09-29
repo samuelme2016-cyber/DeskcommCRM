@@ -8,6 +8,12 @@ Se você roda o DeskcommCRM numa VPS, **leia a seção da versão para a qual es
 
 ## [Não lançado]
 
+## [1.63.4] — 2026-09-29
+
+### Darkcom
+
+- Primeira versão do fork Darkcom: imagens e instalação próprias (base oficial v1.63.3)
+
 ## [1.63.3] — 2026-09-29
 
 ### Alterado
