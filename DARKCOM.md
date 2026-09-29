@@ -88,4 +88,5 @@ na VPS, peça: *"leia o DARKCOM.md e instale seguindo o hostgator-setup-kit/inst
   node darkcom/aplicar-banco.mjs                                          # cria as tabelas
   pnpm exec tsx scripts/bootstrap-owner.ts                                # cria o admin
   ```
-  No dia a dia, só `pnpm dev` e abra `http://localhost:3000`.
+  No dia a dia, só `pnpm dev -p 3100` e abra `http://localhost:3100` (a 3000 é usada por outro
+  projeto neste PC). O login de teste (`OWNER_EMAIL` / `OWNER_PASSWORD`) fica no `.env.local`.
