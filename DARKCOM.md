@@ -80,5 +80,12 @@ na VPS, peça: *"leia o DARKCOM.md e instale seguindo o hostgator-setup-kit/inst
 
 - **Completo (com WhatsApp):** exige virtualização ligada na BIOS e o Docker Desktop. Depois, no
   Ubuntu (WSL): `./ubuntu-local-installer.sh`, que sobe tudo em `http://localhost:3000`.
-- **Sem Docker (sem WhatsApp):** Node 22 + `pnpm install` + projeto Supabase gratuito +
-  `pnpm dev`. O passo a passo está no `README.md`, seção "Desenvolvimento".
+- **Sem Docker (sem WhatsApp):** usa um projeto Supabase gratuito **só para testes** (nunca o
+  da VPS). Na primeira vez:
+  ```bash
+  pnpm install
+  powershell -ExecutionPolicy Bypass -File darkcom\configurar-local.ps1   # pede as chaves no terminal
+  node darkcom/aplicar-banco.mjs                                          # cria as tabelas
+  pnpm exec tsx scripts/bootstrap-owner.ts                                # cria o admin
+  ```
+  No dia a dia, só `pnpm dev` e abra `http://localhost:3000`.
