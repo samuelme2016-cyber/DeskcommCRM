@@ -25,7 +25,9 @@ DESCRICAO="${1:-}"
 VERSAO="${2:-}"
 [ -n "$DESCRICAO" ] || { echo "✖ Diga o que mudou: bash darkcom/publicar-versao.sh \"descrição\""; exit 1; }
 
-REPO="$(gh repo view --json nameWithOwner -q .nameWithOwner)"
+# Do `origin`, e não de `gh repo view`: num clone feito por `gh repo fork`, o gh
+# marca o `upstream` (o oficial) como repositório padrão.
+REPO="$(git config --get remote.origin.url | sed -E 's#^git@github\.com:#https://github.com/#; s#\.git$##; s#^https?://[^/]+/##')"
 case "$REPO" in
   melgarafael/*) echo "✖ Este clone aponta para o projeto OFICIAL ($REPO), não para o fork."; exit 1 ;;
 esac
